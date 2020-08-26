@@ -9,6 +9,6 @@ This repo will eventually contain an analysis of The Global Health Observatory's
 Using This Project
 ------------------
 
-You will need Docker and be able to run docker as your user.
+You will need Docker, and you will need be able to run docker as your user.
     > docker build . -t project1_env
     > docker run -v `pwd`:/home/rstudio -p 8787:8787 -e PASSWORD=<yourpassword> -t project1_env
