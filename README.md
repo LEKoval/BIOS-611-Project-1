@@ -31,6 +31,9 @@ Note that I renamed the first file to "Causes_of_Deaths.csv" for analysis
 
 This line graph shows the global number of deaths from five major causes each year from 1980- 2017. Because the number of deaths varies so greatly, it was difficult to scale the graph to get a clear indication of any trends. This is something I would like to continue to work on.
 
+
+
+
 ![](assets/region_death_heat_prelim.png)
 
 This heatmap shows the total number of deaths by cause from 1980-2017 in various subregions around the world. Similarly to the line graph, it was difficult to scale the death counts to get a clear picture of what is going on. I would like to see if plotting the ratio of the number of deaths per subregion population would produce a more insightful figure. Having looked at the data, this will require significant cleaning and I will need to make decisions on how to handle missing data. I am currently testing various possibilities.
