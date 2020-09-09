@@ -52,3 +52,12 @@ This Docker container is based on rocker/verse. To run rstudio server:
 > docker run -v $(pwd):/home/rstudio -p 8787:8787 -e PASSWORD=yourpassword -t project1_env
 
 You will then need to connect your machine to port 8787.
+
+
+
+### Makefile
+
+The Makefile is a nice resource to understand the aims and capabilities of the project.
+
+For example, to generate the preliminary figures as seen above, you can use the command
+> make figures/cause_line_prelim.png
