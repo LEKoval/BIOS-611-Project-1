@@ -9,3 +9,4 @@ figures/*.png
 figures/*.pdf
 figures/*.Rhistory
 source_data/*
+docker
