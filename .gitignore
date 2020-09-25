@@ -1,10 +1,11 @@
 .local/*
 .rstudio/*
-.DS_Store/*
-.RData/*
-.Rhistory/*
-.swp/*
+.DS_Store
+.RData
+.Rhistory
+.swp
 derived_data/*.csv
 figures/*.png
 figures/*.pdf
+figures/*.Rhistory
 source_data/*
