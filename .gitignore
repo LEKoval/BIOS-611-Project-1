@@ -1,6 +1,10 @@
 .local/*
 .rstudio/*
+.DS_Store/*
+.RData/*
+.Rhistory/*
+.swp/*
 derived_data/*.csv
 figures/*.png
 figures/*.pdf
-source_data/*.csv
+source_data/*
