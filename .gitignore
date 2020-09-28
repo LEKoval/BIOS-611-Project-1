@@ -8,5 +8,8 @@ derived_data/*.csv
 figures/*.png
 figures/*.pdf
 figures/*.Rhistory
+assets/*
 source_data/*
+derived_data/*
 docker
+.bash_history
