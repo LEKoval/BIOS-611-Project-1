@@ -1,3 +1,3 @@
 FROM rocker/verse
 MAINTAINER Lauren Koval <lkoval@unc.edu>
-RUN echo "Hello World"
+RUN R -e "install.packages('gridExtra')"
