@@ -17,13 +17,13 @@ by_year<- cause_subset %>% pivot_wider(names_from = Cause, values_from=Deaths)
 
 
 
-"""
-182 of 194 countries are missing pop data for every year only for the epidemic cause. This can be fixed by merging
-rows of the same country and same year from the by_year df which contains deaths for all causes in an individual year
-in a single row except for Epidemics, which is present in a second row where the country, ISO_CODE, and Year are the
-same, but all the other causes are null. Going to split data into two sets,one for those 182 countries which can be 
-fixed in a systematic way, and the others which may require a different strategy.
-"""
+
+#182 of 194 countries are missing pop data for every year only for the epidemic cause. This can be fixed by merging
+#rows of the same country and same year from the by_year df which contains deaths for all causes in an individual year
+#in a single row except for Epidemics, which is present in a second row where the country, ISO_CODE, and Year are the
+#same, but all the other causes are null. Going to split data into two sets,one for those 182 countries which can be 
+#fixed in a systematic way, and the others which may require a different strategy.
+
 
 #get entries with missing pop data and summarize number of missing years of for each country
 no_pop <- cause_subset %>% filter(is.na(Pop)) 
