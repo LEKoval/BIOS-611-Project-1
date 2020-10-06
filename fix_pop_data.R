@@ -9,7 +9,6 @@ home<- getwd()
 
 setwd(paste(home,"/source_data",sep=""))
 causes <- read_csv("Causes_of_Deaths.csv")
-continents <- read_csv("countryContinent.csv")
 
 setwd(home)
 
