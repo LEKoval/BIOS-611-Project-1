@@ -13,7 +13,9 @@ figures/cause_line_prelim.png figures/region_death_heat_prelim.png: source_data/
 figures/eritrea_population.png figures/kuwait_population.png figures/palestine_population.png figures/serbia_population.png: source_data/Causes_of_Deaths.csv fix_pop_data.R
 				Rscript fix_pop_data.R
 
-
+derived_data/adjusted_eritrea_population.csv:\
+ source_data/Causes_of_Deaths.csv fix_pop_data.R
+				Rscript fix_pop_data.R
 
 
 assets/cause_line_prelim.png: source_data/Causes_of_Deaths.csv source_data/countryContinent.csv prelim_figs.R
