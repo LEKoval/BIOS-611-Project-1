@@ -13,4 +13,4 @@ source_data/*
 derived_data/*
 docker
 .bash_history
-.Rplots.pdf
+Rplots.pdf
