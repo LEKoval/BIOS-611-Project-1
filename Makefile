@@ -33,7 +33,7 @@ derived_data/adjusted_eritrea_population.csv\
 figures/deaths_population_ratio_line_graph.png\
  figures/deaths_ratio_line_graph.png\
  figures/deaths_ratio_heatmap.png:\
- derived_data/cleaned_pop_data.csv\
+ source_data/Causes_of_Deaths.csv\
  source_data/countryContinent.csv\
  updated_prelim_figs.R
 				Rscript updated_prelim_figs.R
