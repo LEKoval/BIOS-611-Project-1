@@ -1,0 +1,77 @@
+
+Lauren Koval
+<br/>
+BIOS 611 Project 1
+<br/>
+October 7, 2020
+<br/>
+
+---
+title: "Examination of 5 Causes of Death Worldwide from 1980-2017"
+output: html_document
+---
+<br/><br/>
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Project Overview
+<br/>
+This project setout uncover both spatial and temporal relationships between various causes of non-disease deaths and the frequency with which they occurred in countries all over the world from 1980-2017.
+<br/><br/>
+The datasets I used are publicly available for download on Kaggle:
+
+
+[global causes of deaths other than disease](https://www.kaggle.com/tahminashoaib86/global-cause-of-the-deaths-other-than-diseases)-  This dataset contains the country, ISO Code, year, total population, and annual number of deaths due to conflicts and terrorism, epidemics, famine, natural disaster, & other injuries for each country in each year. Additional information that I did not use in my analysis incluldes the male population, female population, GDP, and GDP per capita for each country in each year.
+<br/><br/>
+[country to continent mapping](https://www.kaggle.com/statchaitya/country-to-continent)-  This dataset contains the country, various identifying country codes, including the ISO code here named *code_3*, as well as subregions and continents.
+<br/><br/>
+
+To start, I generated a few preliminary figures with the script **prelim_figs.R**:
+<br/><br/><br/>
+![](figures/cause_line_prelim.png)
+<br/><br/>
+This line graph shows the global number of deaths from the five major causes examined in this analysis each year from 1980- 2017. 
+<br/><br/><br/><br/>
+![](figures/region_death_heat_prelim.png)
+<br/><br/>
+ This heatmap shows the total number of deaths from the five major causes examined in this analysis in various subregions of the world from 1980-2017
+<br/><br/>
+Unfortunately, neither of these figures proved to be overly informative. The range of the data was so great, it was difficult to scale the figures while just considering the total number of deaths. For part of my analysis, I decided to try to recreate these figures in ways that would be insightful.
+<br/><br/><br/>
+
+
+## Analysis
+<br/>
+
+### Fixing Population Data
+<br/>
+The first thing I wanted to consider was the ratio of the number of deaths to the population. For the line graph, this would be the annual global population, and for the heatmap, this would be the subregion population. The subregion population consideration was later dropped. I will elaborate more on this later. Unfortunately, the population data in the cause dataset was incomplete. The script **fix_pop_data.R** was used to deal with this as well as perform some general cleaning and organizing. Upon investigation, 182 of the 194 were missing the population for the epidemics cause for every year. This was rectified by copying the population from another cause for that country and that year. There were 8 countries that were missing all population data and these were omitted from the analysis (American Samoa, Bermuda, Dominica, Greenland, Marshall Islands, Northern Mariana Islands, Taiwan, & U.S. Virgin Islands). The other 4 countries (Eritrea, Kuwait, Palestine, and Serbia) were missing population data for a handful of sequential years. I attempted to fit various models to the exisiting population data for those countries to fill in this data.
+<br/><br/><br/>
+![](figures/eritrea_population.png)
+<br/><br/><br/>
+
+![](figures/kuwait_population.png)
+<br/><br/><br/>
+![](figures/palestine_population.png)
+<br/><br/><br/>
+![](figures/serbia_population.png)
+<br/><br/><br/>
+There was a level of subjectivity when selecting the appropriate model to use as a predictor for Eritrea and Serbia. It wouldn't surprise me if there exists a population specific model that could be better predictor than the quadratic and quartic polynomials that I have chosen to use here. However, I have some concerns about the overall quality of the data which I believe to be the ultimate limiting factor, so I am okay with using a less precise models, at least for the time being. The final population data used in further analyses for each of these countries is comprised of the reported values with the predicted values for the missing years.
+<br/><br/>
+**fix_pop_data.R** produces the above figures as well as a csv of the final country specific dataset for each of the modeled countries (**adjusted_eritrea_population.csv**, **adjusted_kuwait_population.csv**, **adjusted_palestine_population.csv**, and **adjusted_serbia_population.csv**) and a final csv of comprising the new complete cause dataset of 186 countrues to use for further analyses (**cleaned_pop_data.csv**). All of these files can be found in the *derived_data* folder. 
+<br/><br/><br/>
+
+### Updating Preliminary Figures
+<br/>
+After creating a more complete and unified cause dataset, I attempted to recreate the preliminary figures but scaling for population size with the script **updated_prelim_figs.R**. This may have been a futile effort. 
+<br/><br/>
+![](figures/deaths_population_ratio_line_graph.png)
+<br/><br/>
+The line graph generated was no more informative than the initial figure. Additionally, after consideration, it didn't make much sense to me to try to scale the subregion heatmap by population. Since there was no temporal consideration presented in the figure, it felt contrived and uninintuitive to artificially introduce that component by aggregating the populations of all subregions over a 38 year span. Instead I considered another approach: scaling by the total number of deaths. Since death is a discrete event, it is easier to aggregate over time than a fluxating variable like population. I then generated these figures:
+<br/><br/>
+![](figures/deaths_ratio_line_graph.png)
+<br/><br/>
+![](figures/deaths_ratio_heatmap.png)
+<br/><br/>
+These figures indicate that both spatially and temporally Conflicts and Terrorism generally account for more deaths relative to the number of deaths than the other four causes. It is particularly interesting to note the mirroring affect of Conflicts and Terrorism with Natural Disaster in the line graph. Upon inspection, in years where a greater proportion of deaths occured due to Conflict and Terrorism, a smaller proportion of deaths occured due to Natural Disaster. I would be very interested in further exploring this relationship. 
