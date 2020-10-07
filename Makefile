@@ -22,13 +22,16 @@ figures/eritrea_population.png\
  fix_pop_data.R
 				Rscript fix_pop_data.R
 
+
+
 figures/deaths_population_ratio_line_graph.png\
  figures/deaths_ratio_line_graph.png\
  figures/deaths_ratio_heatmap.png:\
  derived_data/cleaned_pop_data.csv\
  source_data/countryContinent.csv\
- updated_prelim_figs.R
- 	Rscript updated_prelim_figs.R
+ updated_prelim_figs_pop_data.R
+				Rscript updated_prelim_figs.R
+
 
 
 derived_data/adjusted_eritrea_population.csv\
