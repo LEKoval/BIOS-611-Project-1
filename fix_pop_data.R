@@ -235,15 +235,15 @@ write_csv(serbia_final,"derived_data/adjusted_serbia_population.csv")
 
 fixed_epi <- fixed_epi %>% group_by(ISO_CODE,Year) %>% arrange(.by_group = TRUE)
 
-final_data <- rbind(fixed_epi,eritrea_final)
-final_data <- rbind(final_data,kuwait_final)
-final_data <- rbind(final_data,pal_final)
-final_data <- rbind(final_data,serbia_final)
+final_data <- rbind.data.frame(fixed_epi,eritrea_final)
+final_data <- rbind.data.frame(final_data,kuwait_final)
+final_data <- rbind.data.frame(final_data,pal_final)
+final_data <- rbind.data.frame(final_data,serbia_final)
 
 
 final_data <- data.frame(final_data %>% group_by(ISO_CODE,Year) %>% arrange(.by_group = TRUE))
 
-write_csv(final_data,"derived_data/cleaned_pop_data.csv")
+write_csv(final_data, paste(home,"derived_data/cleaned_pop_data.csv",sep="/"))
 
 
 
