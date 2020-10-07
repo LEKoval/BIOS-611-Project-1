@@ -10,7 +10,6 @@ figures/*.pdf
 figures/*.Rhistory
 assets/*.png
 source_data/*
-derived_data/*
 docker
 .bash_history
 Rplots.pdf
