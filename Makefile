@@ -28,7 +28,7 @@ figures/deaths_population_ratio_line_graph.png\
  derived_data/cleaned_pop_data.csv\
  source_data/countryContinent.csv\
  updated_prelim_figs.R
- 				Rscript updated_prelim_figs.R
+ 	Rscript updated_prelim_figs.R
 
 
 derived_data/adjusted_eritrea_population.csv\
