@@ -13,3 +13,4 @@ docker
 .bash_history
 Rplots.pdf
 derived_data/*.csv
+derived_data/*
