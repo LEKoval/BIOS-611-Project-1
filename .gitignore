@@ -4,7 +4,6 @@
 .RData
 .Rhistory
 .swp
-derived_data/*.csv
 figures/*.png
 figures/*.pdf
 figures/*.Rhistory
