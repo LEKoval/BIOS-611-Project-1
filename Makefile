@@ -6,6 +6,14 @@ clean:
 				rm -f derived_data/*.csv
 
 
+figures/deaths_population_ratio_line_graph.png\
+ figures/deaths_ratio_line_graph.png\
+ figures/deaths_ratio_heatmap.png:\
+ derived_data/cleaned_pop_data.csv\
+ source_data/countryContinent.csv\
+ updated_prelim_figs.R
+				Rscript updated_prelim_figs.R
+
 figures/cause_line_prelim.png\
  figures/region_death_heat_prelim.png:\
  source_data/Causes_of_Deaths.csv\
@@ -29,14 +37,6 @@ derived_data/adjusted_eritrea_population.csv\
  source_data/Causes_of_Deaths.csv\
  fix_pop_data.R
 				Rscript fix_pop_data.R
-
-figures/deaths_population_ratio_line_graph.png\
- figures/deaths_ratio_line_graph.png\
- figures/deaths_ratio_heatmap.png:\
- source_data/Causes_of_Deaths.csv\
- source_data/countryContinent.csv\
- updated_prelim_figs.R
-				Rscript updated_prelim_figs.R
 
 
 assets/cause_line_prelim.png\
