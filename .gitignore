@@ -12,3 +12,4 @@ source_data/*
 docker
 .bash_history
 Rplots.pdf
+derived_data/*.csv
