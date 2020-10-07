@@ -4,6 +4,20 @@ clean:
 				rm -f figures/*.png
 				rm -f assets/*.png
 				rm -f derived_data/*.csv
+				rm -f project_1_report.pdf
+
+
+project_1_report.pdf:\
+ figures/deaths_ratio_line_graph.png\
+ figures/deaths_ratio_heatmap.png\
+ figures/eritrea_population.png\
+ figures/kuwait_population.png\
+ figures/palestine_population.png\
+ figures/serbia_population.png\
+ figures/region_death_heat_prelim.png\
+ figures/cause_line_prelim.png
+				R -e "rmarkdown::render('project_1_report.Rmd', output_format= 'pdf_document')"
+
 
 
 figures/deaths_population_ratio_line_graph.png\
