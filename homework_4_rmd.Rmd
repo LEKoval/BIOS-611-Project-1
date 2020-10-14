@@ -1,0 +1,161 @@
+---
+title: "Homework 4"
+output: html_document
+---
+
+#### Lauren Koval
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+### Vizualizing Data
+
+
+```{r import libraries, echo=FALSE, eval=TRUE, results='hide', warning=FALSE, message=FALSE}
+library(tidyverse)
+library(gbm)
+library(factoextra)
+
+```
+
+After reading in the file, I created a scatter plot of the heights and weights colored by gender. Upon inspection, there doesn't seem to be any immediatley discernible pattern.
+
+```{r read_data, echo=FALSE, eval=TRUE, warning=FALSE, message=FALSE}
+hw_data <- read_csv(paste(getwd(),"source_data/500_Person_Gender_Height_Weight_Index.csv",sep="/"))
+
+head(hw_data)
+
+ggplot(hw_data, aes(x=Height, y=Weight, color=Gender))+geom_point()
+
+
+```
+
+
+### Splitting Data
+
+Next I mutate the dataframe to code "Male" as 1 and "Female" as 0. I then split the data into 3 groups: train, validate, and test.
+
+```{r split_data, echo=TRUE, eval=TRUE}
+hw_data<- hw_data %>% mutate(gen_bin=ifelse(Gender=="Male", 1, 0))
+
+spec = c(train = .7, test = .15, validate = .15)
+
+mod_groups <-  sample(cut(
+  seq(nrow(hw_data)), 
+  nrow(hw_data)*cumsum(c(0,spec)),
+  labels = names(spec)
+))
+
+split_groups <- split(hw_data, mod_groups)
+
+train <- split_groups$train
+test <- split_groups$test
+val <- split_groups$validate
+```
+
+
+### GLM
+Next I trained a GLM to predict the gender (based on the gen_bin column of 0s & 1s) from height and weight. I didn't set a seed so the accuracy changes, but generally the accuracy indicates the model doesn't perform much better, if at all, than randomly guessing.
+
+```{r glm, echo=TRUE, eval=TRUE}
+hw_glm <- glm(data = train, formula= gen_bin~Height+Weight, family=binomial(link='logit'))
+
+glm_pred <- predict(hw_glm, newdata=val, type="response")
+sum((glm_pred>0.5)==val$gen_bin)/nrow(val)
+```
+
+### GBM
+Following the GLM, I trained a GBM to predict the gender. Again, the accuracy did not indicate this model was particularly successful.
+
+```{r gbm, echo=TRUE, eval=TRUE, message= FALSE, warning=FALSE}
+hw_gbm <- gbm(gen_bin~ Height + Weight, data=train,)
+
+gbm_pred <- predict(hw_gbm, newdata = val, type="response")
+sum((gbm_pred>0.5)==val$gen_bin)/nrow(val)
+
+```
+
+
+### Filter Males
+
+In order to create a class imbalance, I randomly select 50 Males and combine them with all the Females.
+
+```{r filter_male, echo=TRUE, eval=TRUE}
+
+female <- hw_data %>% filter(Gender=="Female")
+male_50 <- hw_data %>% filter(Gender=="Male") %>% sample_n(50)
+
+new_hw_data <- rbind(female, male_50)
+```
+```{r imbalance_plot, echo=FALSE, eval=TRUE}
+ggplot(new_hw_data, aes(x=Height, y=Weight, color=Gender))+geom_point()
+```
+
+### New GBM
+
+I now train a GBM on this dataset with the class imbalance after splitting the data into groups just as I did previously. While the accuracy is higher, this does not indicate the model is "good". There are significantly more females in the new dataset and the model always end up predicitng female so this leads to a misleading accuracy. In fact, I was unable to calculate an f1 score. There are no true positives or false positives, so the precision is undefined.
+
+```{r new_split, echo=FALSE, eval=TRUE}
+spec = c(train = .7, test = .15, validate = .15)
+
+mod_groups <-  sample(cut(
+  seq(nrow(new_hw_data)), 
+  nrow(new_hw_data)*cumsum(c(0,spec)),
+  labels = names(spec)
+))
+
+split_groups <- split(new_hw_data, mod_groups)
+
+ntrain <- split_groups$train
+ntest <- split_groups$test
+nval <- split_groups$validate
+```
+
+```{r new_gbm, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+nhw_gbm <- gbm(gen_bin~ Height + Weight, data=ntrain,)
+
+ngbm_pred <- predict(nhw_gbm, newdata = nval, type="response")
+
+sum((ngbm_pred>0.5)==as.logical(nval$gen_bin))/nrow(nval)
+
+```
+
+
+### ROC
+
+Here is an ROC curve for the model. It indicates the model isn't particularly good.
+
+```{r ROC, eval=TRUE, echo=FALSE}
+roc <- do.call(rbind, Map(function(threshold){
+  p <- ngbm_pred > threshold;
+  tp <- sum(p[nval$gen_bin])/sum(nval$gen_bin);
+  fp <- sum(p[!nval$gen_bin])/sum(!nval$gen_bin);
+  tibble(threshold=threshold,
+         tp=tp,
+         fp=fp)
+},seq(100)/100))
+
+ggplot(roc, aes(fp,tp)) + geom_line() + xlim(0,1) + ylim(0,1) +
+  labs(title="ROC Curve",x="False Positive Rate",y="True Positive Rate");
+```
+
+
+### K-Means
+
+Now I use K-Means to cluster the data. Using the factoextra library, I can see that 2 is the optimal number of clusters which intuitively makes sense.
+
+```{r num_clus, eval=TRUE, echo=FALSE, warning=FALSE}
+c_hw_data <- new_hw_data %>% select(gen_bin, Height, Weight)
+fviz_nbclust(c_hw_data, method = "silhouette", FUN=kmeans, k.max=100)
+```
+
+Then I can actually cluster the data. Unfortunately, there is significant overlap in the heights and weights of the genders and this exercise does not provide any insights on the data.
+
+```{r cluster, eval=TRUE, echo=TRUE, warning=FALSE, message=FALSE}
+k2 <- kmeans(c_hw_data, centers = 2, nstart=25) 
+fviz_cluster(k2, data = c_hw_data)
+c_hw_data %>% as_tibble() %>% mutate(cluster=k2$cluster) %>% ggplot(aes(Height, Weight, color=factor(cluster)))+geom_point()
+```
+
