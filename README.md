@@ -60,7 +60,7 @@ For example, to generate the preliminary figures as seen above, you can use the 
 
 ### The Final Report
 
-To generate the final report summarizing this project, first run the command
+To generate the final report summarizing this project, you must first connect to the Rstudio server as described in *Using This Project*. Then in the terminal run the command
 > make clean
 
 followed by
