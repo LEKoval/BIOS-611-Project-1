@@ -79,4 +79,4 @@ p3 <- ggplot(merge_deaths, aes(x=cause, y=sub_region, fill=death_ratio))+
   theme(axis.text.x = element_text(angle = 45, hjust=0.95), plot.title = element_text(hjust = 0.5))+
   labs(title="Ratio of Total Deaths by Cause to Total Deaths\nfrom 1980-2017 by Subregion ", y="subregion")
 
-ggsave("figures/deaths_ratio_heatmap.png", height=16, width=10, unit="in",plot=p3)
+ggsave("figures/deaths_ratio_heatmap.png", height=7, width=5, unit="in",plot=p3)
