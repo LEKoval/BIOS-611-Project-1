@@ -60,5 +60,10 @@ For example, to generate the preliminary figures as seen above, you can use the 
 
 ### The Final Report
 
-To generate the final report summarizing this project, run the command
+To generate the final report summarizing this project, first run the command
+> make clean
+
+followed by
 > make project_1_report.pdf
+
+Note that you will first need to download the datasets linked above to the *source_data* folder and rename the cause dataset from "Caused of Deaths.csv" to "Causes_of_Deaths.csv".
