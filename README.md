@@ -57,3 +57,8 @@ The Makefile is a nice resource to understand the aims and capabilities of the p
 
 For example, to generate the preliminary figures as seen above, you can use the command
 > make figures/cause_line_prelim.png
+
+### The Final Report
+
+To generate the final report summarizing this project, run the command
+> make project_1_report.pdf
