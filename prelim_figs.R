@@ -26,8 +26,8 @@ tidy_data_year$deaths <- as.numeric(tidy_data_year$deaths)
 
 p <- ggplot(tidy_data_year, aes(x=year, y=deaths, group=cause, color=cause))+geom_line()+geom_point()+ggtitle("Global Number of Deaths per Year by\nCause from 1980-2017")+theme(plot.title = element_text(hjust = 0.5))
 
-ggsave(paste(home,"/figures/cause_line_prelim.png",sep=""), plot=p)
-ggsave(paste(home,"/assets/cause_line_prelim.png",sep=""), plot=p)
+ggsave(paste(home,"/figures/cause_line_prelim.png",sep=""),height=11.5, width=13.4, unit="in", plot=p)
+ggsave(paste(home,"/assets/cause_line_prelim.png",sep=""), height=11.5, width=13.4, unit="in",plot=p)
 
 
 
@@ -52,5 +52,5 @@ tidy_data_region$deaths <- as.numeric(tidy_data_region$deaths)
 
 p <- ggplot(tidy_data_region, aes(x=cause, y=sub_region, fill=deaths))+geom_tile(colour="white",size=0.25)+coord_fixed(ratio=.5)+scale_fill_distiller(palette="YlGnBu")+theme(axis.text.x = element_text(angle = 90))+labs(title="Total Number of Deaths by Cause in\nSubregions from 1980-2017", y="subregion")+theme(plot.title = element_text(hjust = 0.5))
 
-ggsave(paste(home,"/figures/region_death_heat_prelim.png",sep=""), plot=p)
-ggsave(paste(home,"/assets/region_death_heat_prelim.png",sep=""), plot=p)
+ggsave(paste(home,"/figures/region_death_heat_prelim.png",sep=""),height=11.5, width=13.4, unit="in", plot=p)
+ggsave(paste(home,"/assets/region_death_heat_prelim.png",sep=""),height=11.5, width=13.4, unit="in", plot=p)
