@@ -14,18 +14,20 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ### Vizualizing Data
 
-
-```{r import libraries, echo=FALSE, eval=TRUE, results='hide', warning=FALSE, message=FALSE}
+First load necesssary libraries
+```{r import libraries, echo=TRUE, eval=TRUE, results='hide', warning=FALSE, message=FALSE}
 library(tidyverse)
 library(gbm)
 library(factoextra)
 library(MLmetrics)
 library(ggfortify)
+library(caret)
+library(e1071)
 
 ```
 
 After reading in the file and getting a feel for the data, I created a scatter plot of the heights and weights colored by gender. There is a much clearer distinction between Males and Females than there was in homework 4.
-```{r read_data, echo=FALSE, eval=TRUE, warning=FALSE, message=FALSE}
+```{r read_data, echo=TRUE, eval=TRUE, warning=FALSE, message=FALSE}
 df <- read_csv("datasets_26073_33239_weight-height.csv")
 
 head(df)
@@ -60,7 +62,7 @@ val <- split_groups$validate
 ### GBM
 I then trained a gradient boosting machine to predict the gender. 
 
-```{r gbm, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+```{r gbm, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE, results="hide"}
 gen_gbm <- gbm(gen_bin~ Height + Weight, data=train,)
 
 gbm_pred <- predict(gen_gbm, newdata = val, type="response")
@@ -189,6 +191,31 @@ tsne %>% ggplot(aes(x=P1, y=P2, color=Alignment))+geom_point()
 ```
 
 
-There does appear to be a very distinct radial cluster that contains both good and bad alignments.
+There does appear to be a very distinct radial cluster that contains both good and bad alignments.There seems to be more of a structure here than when we used PCA for dimensionality reduction.
 
 ## Q5
+
+### Caret
+Here we use the caret package to determine the optimal parameters to use for training a gbm to predict the Alignment based on the stats. Caret suggests 50 trees.
+```{r caret, echo=TRUE, eval=TRUE, message=FALSE, warning=TRUE, results="hide"}
+
+ctrl <- trainControl(method = "repeatedcv", number = 3, savePredictions = "all")
+
+mod_fit <- train(Alignment~Intelligence+Strength+Speed+Durability+Power+Combat, data=df, method = "gbm", trControl= ctrl)
+
+```
+
+```{r caret_results, echo=TRUE, eval=TRUE, message=FALSE, warning=FALSE}
+mod_fit$results
+
+mod_fit$finalModel
+```
+
+## Q6
+
+We need to use strategies like k-folds cross validation to help prevent over and underfitting of the model. K-folds ensures that we get observations of all types in both the training and the test sets at some point. This is especially important in instances of limited data. 
+
+
+## Q7
+
+Recursive feature elimination iteratively removes the weakest feature of a dataset until the specified number of features is retained. Ultimately you should end up with the strongest features to use as predictors for classification and regression problems.
