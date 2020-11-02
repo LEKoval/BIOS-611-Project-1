@@ -11,3 +11,4 @@ RUN pip3 install numpy pandas sklearn plotnine matplotlib
 RUN R -e "install.packages('caret')"
 RUN R -e "install.packages('e1071')"
 RUN R -e "install.packages('shiny')"
+RUN R -e "install.packages('plotly')"
