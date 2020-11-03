@@ -1,4 +1,5 @@
 .PHONY: clean
+.PHONY: shiny_bar
 
 clean:
 				rm -f figures/*.png
@@ -18,6 +19,9 @@ project_1_report.pdf:\
  figures/cause_line_prelim.png
 				R -e "rmarkdown::render('project_1_report.Rmd', output_format= 'pdf_document')"
 
+shiny_bar:\
+ derived_data/cleaned_pop_data.csv
+				Rscript shiny_bar.R ${PORT}
 
 
 figures/deaths_population_ratio_line_graph.png\
