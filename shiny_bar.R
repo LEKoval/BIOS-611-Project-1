@@ -51,7 +51,7 @@ ui <- fluidPage(
     mainPanel(
 
       
-      plotOutput(outputId = "barPlot")
+      plotOutput(outputId = "barPlot",  width = 800, height = 700)
 
     )
   )
@@ -64,7 +64,10 @@ server <- function(input, output) {
     
     plot_temp <- death_ratio %>% filter(Year==input$Year) 
 
-    plot_temp %>% ggplot(aes(x=cause, y=death_ratio, fill=cause))+geom_bar(stat="identity")+labs(x="cause", y="percentage of deaths")
+    plot_temp %>% ggplot(aes(x=cause, y=death_ratio, fill=cause))+
+      geom_bar(stat="identity")+
+      labs(x="cause", y="percentage of deaths")+
+      ylim(0,100)
     
 
   })
