@@ -45,7 +45,7 @@ First you will need to build the container:
 > docker build . -t project1_env
 
 This Docker container is based on rocker/verse. To run rstudio server:
-> docker run -v $(pwd):/home/rstudio -p 8787:8787 -e PASSWORD=yourpassword -t project1_env
+> docker run -v $(pwd):/home/rstudio -p 8787:8787 -p 8080:8080 -e PASSWORD=yourpassword -t project1_env
 
 You will then need to connect your machine to port 8787.
 
@@ -57,6 +57,14 @@ The Makefile is a nice resource to understand the aims and capabilities of the p
 
 For example, to generate the preliminary figures as seen above, you can use the command
 > make figures/cause_line_prelim.png
+
+
+### Rshiny Visualization
+
+To run the interactive visualization with Rshiny, connect to the Rstudio server then in the terminal run the command
+> PORT=8080 make shiny_bar
+
+then connect your machine to port 8080.
 
 ### The Final Report
 
