@@ -61,14 +61,14 @@ For example, to generate the preliminary figures as seen above, you can use the 
 
 ### Rshiny Visualization
 
-To run the interactive visualization with Rshiny, connect to the Rstudio server then in the terminal run the command
+To run the interactive visualization with Rshiny, connect to the Rstudio server as described in *Using This Project*, then in the terminal run the command
 > PORT=8080 make shiny_bar
 
 then connect your machine to port 8080.
 
 ### The Final Report
 
-To generate the final report summarizing this project, you must first connect to the Rstudio server as described in *Using This Project*. Then in the terminal run the command
+To generate the final report summarizing this project, you must first connect to the Rstudio server as described in *Using This Project*, then in the terminal run the command
 > make clean
 
 followed by
