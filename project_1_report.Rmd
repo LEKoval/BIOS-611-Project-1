@@ -75,3 +75,10 @@ The line graph generated was no more informative than the initial figure. Additi
 These figures indicate that both spatially and temporally, Conflicts and Terrorism generally account for more deaths, relative to the number of deaths, than the other four causes. It is particularly interesting to note the mirroring effect of Conflicts and Terrorism with Natural Disaster in the line graph. Upon inspection, in years where a greater proportion of deaths occurred due to Conflict and Terrorism, a smaller proportion of deaths occurred due to Natural Disaster. I would be very interested in further exploring this relationship. Additionally, just out of curiosity, I would be interested in using a time series analysis to predict the number of deaths expected in the U.S. due to an epidemic for 2020 solely to compare to where we are at (~220K as of October 19th) 
 
 I did have some reservations about the quality of the data in the cause dataset, so it would be beneficial to try to find additional datasets that could be used to both validate and supplement the current data for future analyses.
+
+
+## The Interactive Visualization
+
+An Rshiny application was later created that was inspired by the line graph. While the line graph that was scaled by the number of deaths was more insightful then the initial figure, it was still a little difficult to look at,as there is a lot going on. I thought a bar graph depicitng the same information for each year would be more straightforward. I implemented a sliding bar to change the year which allows for a smooth, seamless transition between the graphs for each year. I think both the static and interactive plots have their merit, but the interactive plot makes the information easier to digest.
+
+The application can be run by following the instructions in the section **Rshiny Visualization** in the project README. 
