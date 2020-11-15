@@ -20,13 +20,15 @@ project_1_report.pdf:\
  figures/usa_epidemics_trend.png\
  figures/usa_epidemics_time_series_decomp.png\
  figures/usa_epidemics_time_series_predict.png\
- usa_epidemics_time_series_forecast.png
+ figures/usa_epidemics_time_series_forecast.png\
+ derived_data/usa_epi_5yr_forecast.csv
 				R -e "rmarkdown::render('project_1_report.Rmd', output_format= 'pdf_document')"
 
 figures/usa_epidemics_trend.png\
  figures/usa_epidemics_time_series_decomp.png\
  figures/usa_epidemics_time_series_predict.png\
- figures/usa_epidemics_time_series_forecast.png:\
+ figures/usa_epidemics_time_series_forecast.png\
+ derived_data/usa_epi_5yr_forecast.csv:\
  derived_data/cleaned_pop_data.csv\
  usa_epi_time_series.py
 				python3 usa_epi_time_series.py
