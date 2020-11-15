@@ -16,8 +16,21 @@ project_1_report.pdf:\
  figures/palestine_population.png\
  figures/serbia_population.png\
  figures/region_death_heat_prelim.png\
- figures/cause_line_prelim.png
+ figures/cause_line_prelim.png\
+ figures/usa_epidemics_trend.png\
+ figures/usa_epidemics_time_series_decomp.png\
+ figures/usa_epidemics_time_series_predict.png\
+ usa_epidemics_time_series_forecast.png
 				R -e "rmarkdown::render('project_1_report.Rmd', output_format= 'pdf_document')"
+
+figures/usa_epidemics_trend.png\
+ figures/usa_epidemics_time_series_decomp.png\
+ figures/usa_epidemics_time_series_predict.png\
+ figures/usa_epidemics_time_series_forecast.png:\
+ derived_data/cleaned_pop_data.csv\
+ usa_epi_time_series.py
+				python3 usa_epi_time_series.py
+
 
 shiny_bar:\
  derived_data/cleaned_pop_data.csv
