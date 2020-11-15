@@ -1,9 +1,9 @@
 
 Lauren Koval
 
-BIOS 611 Project 1
+BIOS 611
 
-October 19, 2020
+November 15, 2020
 
 
 ---
@@ -82,3 +82,45 @@ I did have some reservations about the quality of the data in the cause dataset,
 An Rshiny application was later created that was inspired by the line graph. While the line graph that was scaled by the number of deaths was more insightful then the initial figure, it was still a little difficult to look at,as there is a lot going on. I thought a bar graph depicitng the same information for each year would be more straightforward. I implemented a sliding bar to change the year which allows for a smooth, seamless transition between the graphs for each year. I think both the static and interactive plots have their merit, but the interactive plot makes the information easier to digest.
 
 The application can be run by following the instructions in the section **Rshiny Visualization** in the project README. 
+
+
+## The Python Component
+
+For the Python component of this project, I attempted to perform a time series analysis that forecasted the number of deaths the United States would experience as a result of an epidemic in 2020. As a reminder, the dataset I worked with contained the number of deaths due to conflict and terrorism, famine, epidemics, natural disaster, and other injuries in 194 countries from 1980-2017. Not surprisingly, the forecasted value from this dataset for 2020 was nowhere close to the ~245k we are at today (11-15-20). In fact it isn't even practical.
+
+To perform the analysis I build an additive Autorgressive Integrated Moving Average model using the SARIMAX class within the statsmodels library. I am not overly familiar with time series analysis and this was my first time attempting anythig of the sort, so this is likely not the most refined model. Nonetheless, it was good experience to read the documentation and piece everything together on my own.
+
+
+Here is the the initial plot showing the number of deaths in the United States from an epidemic from 1980-2017
+
+![](figures/usa_epidemics_trend.png)
+
+
+Next I decomposed the data into the trend, seasonal trend, and the residuals, which are important factors to consider when building the model. Since the data is annual, there isn't any seasonal trend and we can see the observed trend is what should be considered.
+
+![](figures/usa_epidemics_time_series_decomp.png)
+
+
+I then ran a grid search to optimize the parameters. The optimal parameters for considering the trend and seasonal trend were (0, 1, 1) and (0, 1, 1, 12). These paramters were selected based on the value of the AIC score, when compared to the AIC scores for other combinations of parameters.
+
+I built my model with these parameters and predicted the number of deaths expected from 2002-2017. From there, I compared them to the observed counts for those years. These results are as follows:
+
+![](figures/usa_epidemics_time_series_predict.png)
+
+Overall, the predictions don't look half bad. The 95% confidence interval captures the observed counts in most of the predicted years. Additionally the reported Mean Square Error of the predictions is 264.36 and the Root Mean Square Error is 16.26. Given that the deaths ranged from 0 to >300, I think the RMSE is decent. However, it is worth noting at this point the downward trend of the data. There were no reported deaths from an epidemic reported in the U.S. from 2015-2017. The confidence interval does contain negative values for these years, and even some of the preceding years. This is obviously realistically impossible.
+
+After confirming the model seemed to be making sense, at least mathematically, I then predicted the number of deaths the U.S. would experience in 2018, 2019, 2020, 2021, and 2022 along with their 95% confidence intervals. The results are as follows:
+
+```{r forecast, echo=FALSE, eval=TRUE, message=FALSE, warning=FALSE}
+library(tidyverse)
+home <- getwd()
+f <- read_csv(paste(home,"/derived_data/usa_epi_5yr_forecast.csv",sep=""))
+print(f)
+```
+
+
+![](figures/usa_epidemics_time_series_forecast.png)
+
+The predicted number of deaths for this year according to this model is -23 with a 95% CI (-74.4, 28.6), so there you have it, 23 people will have come back to life by the end of the year.
+
+Going into this analysis, I knew the prediction was going to be very, very far off from where we are. How could it not given the data and the trends from the dataset I was using? Again, this was my first attempt ever at a time series analysis so it was difficult for me to make choices regarding what model to use, how to hypertune parameters, and how to evaluate the quality. I was heavily reliant on online sources to guide me in the right direction but I don't have much of an intution on these decisions at this point in time. Nonetheless, I'm content with the result I've produce for this first pass and this was a good introduction to this subject.
