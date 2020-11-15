@@ -103,11 +103,11 @@ Next I decomposed the data into the trend, seasonal trend, and the residuals, wh
 
 I then ran a grid search to optimize the parameters. The optimal parameters for considering the trend and seasonal trend were (0, 1, 1) and (0, 1, 1, 12). These paramters were selected based on the value of the AIC score, when compared to the AIC scores for other combinations of parameters.
 
-I built my model with these parameters and predicted the number of deaths expected from 2002-2017. From there, I compared them to the observed counts for those years. These results are as follows:
+I built my model with these parameters and predicted the number of deaths expected from 2002-2017. From there, I compared the predictions to the observed counts for those years. These results are as follows:
 
 ![](figures/usa_epidemics_time_series_predict.png)
 
-Overall, the predictions don't look half bad. The 95% confidence interval captures the observed counts in most of the predicted years. Additionally the reported Mean Square Error of the predictions is 264.36 and the Root Mean Square Error is 16.26. Given that the deaths ranged from 0 to >300, I think the RMSE is decent. However, it is worth noting at this point the downward trend of the data. There were no reported deaths from an epidemic reported in the U.S. from 2015-2017. The confidence interval does contain negative values for these years, and even some of the preceding years. This is obviously realistically impossible.
+Upon inspection, the predictions don't look half bad. The 95% confidence interval captures the observed counts in most of the predicted years. Additionally the reported Mean Square Error of the predictions is 264.36 and the Root Mean Square Error is 16.26. Given that the deaths ranged from 0 to >300, I think the RMSE is decent. However, it is worth noting at this point, the downward trend of the data. There were no deaths from an epidemic reported in the U.S. from 2015-2017. The confidence intervals contain negative values for these years, and even some of the preceding years. This is obviously not physically possible.
 
 After confirming the model seemed to be making sense, at least mathematically, I then predicted the number of deaths the U.S. would experience in 2018, 2019, 2020, 2021, and 2022 along with their 95% confidence intervals. The results are as follows:
 
@@ -123,4 +123,4 @@ print(f)
 
 The predicted number of deaths for this year according to this model is -23 with a 95% CI (-74.4, 28.6), so there you have it, 23 people will have come back to life by the end of the year.
 
-Going into this analysis, I knew the prediction was going to be very, very far off from where we are. How could it not given the data and the trends from the dataset I was using? Again, this was my first attempt ever at a time series analysis so it was difficult for me to make choices regarding what model to use, how to hypertune parameters, and how to evaluate the quality. I was heavily reliant on online sources to guide me in the right direction but I don't have much of an intution on these decisions at this point in time. Nonetheless, I'm content with the result I've produce for this first pass and this was a good introduction to this subject.
+Going into this analysis, I knew the prediction was going to be very, very far off from where we are. How could it not be given the data and the trends from the dataset I was using? Again, this was my first ever attempt at a time series analysis, so it was difficult to make choices regarding what model to use, how to hypertune parameters, and how to evaluate the quality. I was heavily reliant on online sources to guide me in the right direction, but I don't have much of an intution on these decisions at this point in time. Nonetheless, I'm content with the results I've produced for this first pass, and this was a good introduction to this subject.
