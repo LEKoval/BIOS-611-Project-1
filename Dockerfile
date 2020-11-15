@@ -13,4 +13,4 @@ RUN R -e "install.packages('e1071')"
 RUN R -e "install.packages('shiny')"
 RUN R -e "install.packages('plotly')"
 RUN pip3 install jupyter jupyterlab
-RUN pip3 install statsmodels itertools
+RUN pip3 install statsmodels
