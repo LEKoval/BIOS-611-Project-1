@@ -96,3 +96,11 @@ ax.figure.savefig("figures//usa_epidemics_time_series_forecast.png", dpi=200)
 
 print(pred_mean)
 print(pred_ci)
+
+
+forecast_csv=pd.concat([pred_mean, pred_ci], axis=1)
+forecast_csv.reset_index(inplace=True)
+forecast_csv.rename(columns={"index":"Year"}, inplace=True)
+forecast_csv.Year=forecast_csv.Year.dt.strftime("%Y")
+
+forecast_csv.to_csv("derived_data//usa_epi_5yr_forecast.csv", index=False)
