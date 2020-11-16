@@ -69,7 +69,7 @@ then connect your machine to port 8080.
 
 ### The Python Component
 
-The script for the python component of this project **usa_epi_time_series.py** can be viewed in a jupyter noteboook. To open a jupyter notebook, you will need to make sure the docker container as described in *Using this Project* then run
+The script for the python component of this project **usa_epi_time_series.py** can be viewed in a jupyter noteboook. To open a jupyter notebook, you will need to build the docker container as described in *Using this Project* then run
 
 > docker run -p 8765:8765 -v pwd:/home/rstudio -e PASSWORD=$SECRET_PWD -it project1_env sudo -H -u rstudio /bin/bash -c "cd ~/; jupyter lab --ip 0.0.0.0 --port 8765"
 
