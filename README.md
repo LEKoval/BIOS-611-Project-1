@@ -71,7 +71,7 @@ then connect your machine to port 8080.
 
 The script for the python component of this project **usa_epi_time_series.py** can be viewed in a jupyter noteboook. To open a jupyter notebook, you will need to build the docker container as described in *Using this Project* then run
 
-> docker run -p 8765:8765 -v pwd:/home/rstudio -e PASSWORD=$SECRET_PWD -it project1_env sudo -H -u rstudio /bin/bash -c "cd ~/; jupyter lab --ip 0.0.0.0 --port 8765"
+> docker run -p 8765:8765 -v $(pwd):/home/rstudio -e PASSWORD=$SECRET_PWD -it project1_env sudo -H -u rstudio /bin/bash -c "cd ~/; jupyter lab --ip 0.0.0.0 --port 8765"
 
 and follow the instructions presented for how to open the notebook. If you do not wish to open the jupyter notebook, the primary results along with commentary are included in the final report which can be produced by following the instructions presented in *The Final Report* section below.
 
